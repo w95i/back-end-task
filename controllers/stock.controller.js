@@ -4,7 +4,9 @@ const stock = require("../db/stock.json");
 const getAvailableStockByPlanId = (planId) => {
   const availableStock = stock.filter(
     (item) => item.planId === planId && item.status === "ready"
-  );
+  ).map((item) => {
+    return { ...item, code: `******${item.code.slice(-4)}` };
+  });
   if (availableStock.length === 0) {
     return { message: "No available stock for this plan" };
   }
